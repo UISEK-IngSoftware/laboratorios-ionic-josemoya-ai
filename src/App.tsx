@@ -46,6 +46,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import AuthService from './services/AuthService';
+import EditRepository from './pages/EditRepository';
 
 setupIonicReact();
 
@@ -68,6 +69,9 @@ const App: React.FC = () => {
                   </Route>
                   <Route exact path="/tab2">
                     <Tab2 />
+                  </Route>
+                  <Route exact path="/edit-repository">
+                    <EditRepository />
                   </Route>
                   <Route path="/tab3">
                     <Tab3 />

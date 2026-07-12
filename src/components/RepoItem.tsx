@@ -3,8 +3,19 @@ import "./RepoItem.css";
 import React from "react";
 import { pencilOutline, trashOutline } from "ionicons/icons";
 import { Repository } from "../interfaces/Repository";
+import { useHistory } from "react-router";
 
 const RepoItem: React.FC<Repository> = (repository) => {
+  const history = useHistory();
+  const goToEdit = () => {
+    history.push({
+      pathname: "/edit-repository",
+      state: {
+        repository
+      }
+    });
+  };
+
     return (
         <IonItemSliding>
             
@@ -20,7 +31,7 @@ const RepoItem: React.FC<Repository> = (repository) => {
             </IonItem>
 
             <IonItemOptions>
-              <IonItemOption>
+              <IonItemOption onClick={goToEdit}>
                 <IonIcon icon={pencilOutline} slot='icon-only'/>
               </IonItemOption>
               <IonItemOption color="danger">

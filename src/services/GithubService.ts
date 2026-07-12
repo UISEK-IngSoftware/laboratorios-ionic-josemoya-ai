@@ -39,6 +39,18 @@ export const createRepository = async (repository: RepositoryPayload): Promise<R
     }
 };
 
+export const updateRepository = async (owner: string, repoName: string, repository: RepositoryPayload): Promise<Repository | null> => {
+    try {
+        const response = await githubApiClient.patch(
+            `/repos/${owner}/${repoName}`,
+            repository
+        );
+        return response.data as Repository;
+    } catch (error) {
+        throw new Error("Error actualizando repositorio: " + error);
+    }
+};
+
 export const getUserInfo = async (): Promise<GithubUser | null> => {
     try {
         const response = await githubApiClient.get("/user");

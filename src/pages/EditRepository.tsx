@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 import { useHistory, useLocation } from "react-router";
 
@@ -17,10 +17,16 @@ const EditRepository: React.FC = () => {
     const [loading, setLoading] = React.useState(false);
     const [errorMsg, setErrorMsg] = React.useState("");
 
+    useEffect(() => {
+        if (!repository) {
+            history.replace("/tab1");
+        }
+    }, [repository, history]);
+    
     if (!repository) {
-        history.replace("/tab1");
         return null;
     }
+
     return (
         <IonPage>
             <IonHeader>

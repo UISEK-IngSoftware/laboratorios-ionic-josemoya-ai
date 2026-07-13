@@ -51,6 +51,16 @@ export const updateRepository = async (owner: string, repoName: string, reposito
     }
 };
 
+export const deleteRepository = async (owner: string, repoName: string): Promise<void> => {
+    try{
+        await githubApiClient.delete(
+            `/repos/${owner}/${repoName}`
+        );
+    }catch(error){
+        throw new Error("Error eliminando repositorio: " + error);
+    }
+}
+
 export const getUserInfo = async (): Promise<GithubUser | null> => {
     try {
         const response = await githubApiClient.get("/user");

@@ -3,6 +3,7 @@ import './Tab1.css';
 import RepoItem from '../components/RepoItem';
 import React from 'react';
 import { Repository } from '../interfaces/Repository';
+import { deleteRepository } from "../services/GithubService";
 import { fetchRepositories } from '../services/GithubService';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -17,6 +18,21 @@ const Tab1: React.FC = () => {
       .then((reposData) => setRepos(reposData))
       .catch((error) => setErrorMsg(error.message))
       .finally(() => setLoading(false));
+  };
+
+  const removeRepository = async (repository: Repository) => {
+    try {
+      setLoading(true);
+      await deleteRepository(
+        repository.owner.login,
+        repository.name
+      );
+      await loadRepositories();
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMsg(error.message);
+      }
+    }
   };
 
   useIonViewWillEnter(() => {
@@ -39,7 +55,7 @@ const Tab1: React.FC = () => {
         {!loading && repos.length > 0 && (
           <IonList>
             {repos.map((repo) => (
-              <RepoItem key={repo.id} {...repo} />
+              <RepoItem key={repo.id} {...repo} onDelete={removeRepository}/>
             ))}
           </IonList>
         )}
